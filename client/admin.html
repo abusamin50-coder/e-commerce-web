@@ -339,7 +339,7 @@
   ============================================== -->
     <script>
       // API Base URL
-      const API_URL = '/api';
+      const API_URL = "/api";
 
       // =============================================
       // CHECK IF USER IS ADMIN
@@ -377,51 +377,38 @@
           const response = await fetch(`${API_URL}/products`);
           const data = await response.json();
 
-          // Update total products count
-          document.getElementById("totalProducts").textContent =
-            data.products.length;
+          const totalProducts = data.products ? data.products.length : 0;
+          document.getElementById("totalProducts").textContent = totalProducts;
 
-          if (data.products.length === 0) {
+          if (totalProducts === 0) {
             list.innerHTML = `
             <div class="text-center py-8 text-gray-400">
               <i class="fa-solid fa-box-open text-4xl mb-2"></i>
-              <p class="text-sm">No products yet</p>
+              <p class="text-sm">No products yet. Add some!</p>
             </div>`;
             return;
           }
 
-          // Build products list
           list.innerHTML = data.products
             .map(
               (product) => `
           <div class="flex items-center space-x-3 p-3 bg-gray-50 rounded-xl">
-
-            <!-- Product Image -->
             <img
               src="${product.image}"
               alt="${product.title}"
               class="w-12 h-12 object-cover rounded-lg flex-shrink-0"
               onerror="this.src='https://via.placeholder.com/48?text=No'"
             />
-
-            <!-- Product Info -->
             <div class="flex-1 min-w-0">
-              <p class="font-medium text-gray-800 text-sm truncate">
-                ${product.title}
-              </p>
-              <p class="text-purple-600 text-xs font-bold">
-                ৳${product.price.toLocaleString()}
-              </p>
+              <p class="font-medium text-gray-800 text-sm truncate">${product.title}</p>
+              <p class="text-purple-600 text-xs font-bold">৳${product.price.toLocaleString()}</p>
               <p class="text-gray-400 text-xs">${product.category}</p>
             </div>
-
-            <!-- Delete Button -->
             <button
               onclick="deleteProduct('${product._id}')"
               class="text-red-400 hover:text-red-600 transition flex-shrink-0">
               <i class="fa-solid fa-trash text-sm"></i>
             </button>
-
           </div>
         `,
             )
@@ -433,7 +420,6 @@
           </div>`;
         }
       }
-
       // =============================================
       // LOAD USERS COUNT
       // =============================================
