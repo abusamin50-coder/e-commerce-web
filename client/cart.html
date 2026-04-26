@@ -1,0 +1,251 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Cart — MyShop</title>
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Google Fonts -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- Font Awesome Icons -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+
+    <style>
+      * {
+        font-family: "Poppins", sans-serif;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+    </style>
+  </head>
+
+  <body class="bg-gray-100">
+    <!-- =============================================
+       NAVBAR
+  ============================================== -->
+    <nav class="bg-white shadow-md sticky top-0 z-50">
+      <div class="max-w-7xl mx-auto px-4 py-3">
+        <div class="flex items-center justify-between">
+          <!-- Logo -->
+          <div class="flex items-center space-x-2">
+            <i class="fa-solid fa-bag-shopping text-purple-600 text-2xl"></i>
+            <a href="index.html" class="text-2xl font-bold text-purple-600">
+              My<span class="text-gray-800">Shop</span>
+            </a>
+          </div>
+
+          <!-- Right Side -->
+          <div class="flex items-center space-x-4">
+            <a
+              href="index.html"
+              class="text-gray-600 hover:text-purple-600 font-medium text-sm"
+            >
+              <i class="fa-solid fa-house mr-1"></i>Home
+            </a>
+
+            <a
+              href="login.html"
+              id="loginBtn"
+              class="text-gray-600 hover:text-purple-600 font-medium text-sm"
+            >
+              <i class="fa-solid fa-user mr-1"></i>Login
+            </a>
+
+            <a href="cart.html" class="relative">
+              <i class="fa-solid fa-cart-shopping text-purple-600 text-xl"></i>
+              <span
+                id="cartCount"
+                class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center"
+              >
+                0
+              </span>
+            </a>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- =============================================
+       CART PAGE
+  ============================================== -->
+    <section class="max-w-5xl mx-auto px-4 py-10">
+      <!-- Page Title -->
+      <h1 class="text-3xl font-bold text-gray-800 mb-8">
+        <i class="fa-solid fa-cart-shopping text-purple-600 mr-2"></i>
+        My Cart
+        <span id="cartItemCount" class="text-lg text-gray-400 font-normal ml-2">
+          (0 items)
+        </span>
+      </h1>
+
+      <!-- Empty Cart Message -->
+      <div id="emptyCart" class="hidden text-center py-20">
+        <i class="fa-solid fa-cart-shopping text-gray-200 text-8xl mb-6"></i>
+        <h2 class="text-2xl font-semibold text-gray-400 mb-4">
+          Your cart is empty!
+        </h2>
+        <p class="text-gray-400 mb-8">
+          Looks like you haven't added anything yet.
+        </p>
+        <a
+          href="index.html"
+          class="bg-purple-600 hover:bg-purple-700 text-white px-8 py-3 rounded-full font-semibold transition"
+        >
+          <i class="fa-solid fa-arrow-left mr-2"></i>Continue Shopping
+        </a>
+      </div>
+
+      <!-- Cart Content -->
+      <div id="cartContent" class="hidden">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <!-- Cart Items List -->
+          <div class="lg:col-span-2 space-y-4" id="cartItemsList"></div>
+
+          <!-- Order Summary -->
+          <div class="lg:col-span-1">
+            <div class="bg-white rounded-2xl shadow-md p-6 sticky top-24">
+              <h2 class="text-xl font-bold text-gray-800 mb-6">
+                <i class="fa-solid fa-receipt text-purple-600 mr-2"></i>
+                Order Summary
+              </h2>
+
+              <div class="space-y-3 mb-6">
+                <div class="flex justify-between text-gray-600 text-sm">
+                  <span>Subtotal</span>
+                  <span id="subtotal">৳0</span>
+                </div>
+
+                <div class="flex justify-between text-gray-600 text-sm">
+                  <span>Delivery Fee</span>
+                  <span class="text-green-500 font-medium">Free</span>
+                </div>
+
+                <div class="flex justify-between text-gray-600 text-sm">
+                  <span>Discount</span>
+                  <span class="text-red-500">-৳0</span>
+                </div>
+
+                <div class="border-t pt-3">
+                  <div
+                    class="flex justify-between font-bold text-gray-800 text-lg"
+                  >
+                    <span>Total</span>
+                    <span id="totalPrice" class="text-purple-600">৳0</span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Checkout Button -->
+              <button
+                onclick="checkout()"
+                class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-full transition text-sm"
+              >
+                <i class="fa-solid fa-lock mr-2"></i>Proceed to Checkout
+              </button>
+
+              <!-- Clear Cart Button -->
+              <button
+                onclick="clearCart()"
+                class="w-full bg-red-50 hover:bg-red-100 text-red-500 font-medium py-2 rounded-full transition text-sm mt-3"
+              >
+                <i class="fa-solid fa-trash mr-2"></i>Clear Cart
+              </button>
+
+              <!-- Continue Shopping -->
+              <a
+                href="index.html"
+                class="block text-center text-purple-600 hover:text-purple-800 text-sm mt-4 font-medium"
+              >
+                <i class="fa-solid fa-arrow-left mr-1"></i>Continue Shopping
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- =============================================
+       FOOTER
+  ============================================== -->
+    <footer class="bg-gray-800 text-white mt-16">
+      <div class="max-w-7xl mx-auto px-4 py-12">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <!-- Footer Logo -->
+          <div>
+            <div class="flex items-center space-x-2 mb-4">
+              <i class="fa-solid fa-bag-shopping text-purple-400 text-2xl"></i>
+              <span class="text-2xl font-bold"
+                >My<span class="text-purple-400">Shop</span></span
+              >
+            </div>
+            <p class="text-gray-400 text-sm">
+              Your one-stop online shop for the best products at the best
+              prices.
+            </p>
+          </div>
+
+          <!-- Quick Links -->
+          <div>
+            <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+            <ul class="space-y-2 text-gray-400 text-sm">
+              <li>
+                <a href="index.html" class="hover:text-white transition"
+                  >Home</a
+                >
+              </li>
+              <li>
+                <a href="cart.html" class="hover:text-white transition">Cart</a>
+              </li>
+              <li>
+                <a href="login.html" class="hover:text-white transition"
+                  >Login</a
+                >
+              </li>
+              <li>
+                <a href="admin.html" class="hover:text-white transition"
+                  >Admin</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <!-- Contact -->
+          <div>
+            <h3 class="text-lg font-semibold mb-4">Contact Us</h3>
+            <ul class="space-y-2 text-gray-400 text-sm">
+              <li>
+                <i class="fa-solid fa-envelope mr-2"></i>support@myshop.com
+              </li>
+              <li><i class="fa-solid fa-phone mr-2"></i>+880 1234 567890</li>
+              <li>
+                <i class="fa-solid fa-location-dot mr-2"></i>Chittagong,
+                Bangladesh
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div
+          class="border-t border-gray-700 mt-8 pt-6 text-center text-gray-400 text-sm"
+        >
+          <p>© 2026 MyShop. All rights reserved. Made with ❤️ in Bangladesh</p>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Link to cart.js -->
+    <script src="js/cart.js"></script>
+  </body>
+</html>

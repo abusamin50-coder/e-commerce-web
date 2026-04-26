@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>My Profile — MyShop</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    * { font-family: 'Poppins', sans-serif; }
+  </style>
+</head>
+
+<body class="bg-gray-100">
+
+  <!-- NAVBAR -->
+  <nav class="bg-white shadow-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 py-3">
+      <div class="flex items-center justify-between">
+        <div class="flex items-center space-x-2">
+          <i class="fa-solid fa-bag-shopping text-purple-600 text-2xl"></i>
+          <a href="index.html" class="text-2xl font-bold text-purple-600">
+            My<span class="text-gray-800">Shop</span>
+          </a>
+        </div>
+        <div class="flex items-center space-x-4">
+          <a href="index.html" class="text-gray-600 hover:text-purple-600 text-sm font-medium">
+            <i class="fa-solid fa-house mr-1"></i>Home
+          </a>
+          <a href="cart.html" class="relative">
+            <i class="fa-solid fa-cart-shopping text-gray-600 hover:text-purple-600 text-xl"></i>
+            <span id="cartCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">0</span>
+          </a>
+          <button onclick="logout()" class="text-red-500 hover:text-red-700 text-sm font-medium">
+            <i class="fa-solid fa-right-from-bracket mr-1"></i>Logout
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- MAIN CONTENT -->
+  <div class="max-w-4xl mx-auto px-4 py-10">
+
+    <!-- Page Title -->
+    <h1 class="text-3xl font-bold text-gray-800 mb-8">
+      <i class="fa-solid fa-user-circle text-purple-600 mr-2"></i>
+      My Profile
+    </h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+      <!-- Profile Card -->
+      <div class="md:col-span-1">
+        <div class="bg-white rounded-2xl shadow-md p-6 text-center">
+
+          <!-- Avatar -->
+          <div class="w-24 h-24 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-4">
+            <i class="fa-solid fa-user text-purple-600 text-4xl"></i>
+          </div>
+
+          <!-- User Info -->
+          <h2 id="profileName" class="text-xl font-bold text-gray-800">Loading...</h2>
+          <p id="profileEmail" class="text-gray-400 text-sm mt-1">Loading...</p>
+
+          <!-- Role Badge -->
+          <span id="profileRole" class="inline-block mt-3 bg-purple-100 text-purple-600 text-xs px-3 py-1 rounded-full font-medium">
+            User
+          </span>
+
+          <!-- Logout Button -->
+          <button
+            onclick="logout()"
+            class="w-full mt-6 bg-red-50 hover:bg-red-100 text-red-500 font-medium py-2 rounded-xl transition text-sm">
+            <i class="fa-solid fa-right-from-bracket mr-2"></i>Logout
+          </button>
+
+          <!-- Admin Panel Link -->
+          <a id="adminLink" href="admin.html" class="hidden w-full mt-3 block bg-purple-600 hover:bg-purple-700 text-white font-medium py-2 rounded-xl transition text-sm text-center">
+            <i class="fa-solid fa-shield mr-2"></i>Admin Panel
+          </a>
+
+        </div>
+      </div>
+
+
+      <!-- Settings Forms -->
+      <div class="md:col-span-2 space-y-6">
+
+        <!-- Update Name -->
+        <div class="bg-white rounded-2xl shadow-md p-6">
+          <h3 class="text-lg font-bold text-gray-800 mb-4">
+            <i class="fa-solid fa-pen text-purple-600 mr-2"></i>
+            Update Name
+          </h3>
+
+          <div id="nameError" class="hidden bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-xl mb-4 text-sm"></div>
+          <div id="nameSuccess" class="hidden bg-green-50 border border-green-200 text-green-600 px-4 py-3 rounded-xl mb-4 text-sm"></div>
+
+          <div class="space-y-4">
+            <div>
+              <label class="block text-gray-700 text-sm font-medium mb-1">New Name</label>
+              <div class="flex items-center bg-gray-50 border border-gray-200 rounded-xl px-4 py-3">
+                <i class="fa-solid fa-user text-gray-400 mr-3"></i>
+                <input
+                  type="text"
+                  id="newName"
+                  placeholder="Enter new name"
+                  class="bg-transparent outline-none w-full text-gray-700 text-sm"
+                />
+              </div>
+            </div>
+            <button
+              onclick="updateName()"
+              class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-xl transition text-sm">
+              <i class="fa-solid fa-check mr-2"></i>Update Name
+            </button>
+          </div>
+        </div>
+
+
+        <!-- Update Password -->
+        <div class="bg-white rounded-2xl shadow-md p-6">
+          <h3 class="text-lg font-bold text-gray-800 mb-4">
+            <i class="fa-solid fa-lock text-purple-600 mr-2"></i>
+            Change Password
+          </h3>
+
+          <div id="passError" class="hidden bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-xl mb-4 text-sm"></div>
+          <div id="passSuccess" class="hidden bg-green-50 border border-green-200 text-green-600 px-4 py-3 rounded-xl mb-4 text-sm"></div>
+
+          <div class="space-y-4">
+
+            <!-- Current Password -->
+            <div>
+              <label class="block text-gray-700 text-sm font-medium mb-1">Current Password</label>
+              <div class="flex items-center bg-gray-50 border border-gray-200 rounded-xl px-4 py-3">
+                <i class="fa-solid fa-lock text-gray-400 mr-3"></i>
+                <input
+                  type="password"
+                  id="currentPassword"
+                  placeholder="Enter current password"
+                  class="bg-transparent outline-none w-full text-gray-700 text-sm"
+                />
+              </div>
+            </div>
+
+            <!-- New Password -->
+            <div>
+              <label class="block text-gray-700 text-sm font-medium mb-1">New Password</label>
+              <div class="flex items-center bg-gray-50 border border-gray-200 rounded-xl px-4 py-3">
+                <i class="fa-solid fa-lock text-gray-400 mr-3"></i>
+                <input
+                  type="password"
+                  id="newPassword"
+                  placeholder="Enter new password"
+                  class="bg-transparent outline-none w-full text-gray-700 text-sm"
+                />
+              </div>
+            </div>
+
+            <!-- Confirm New Password -->
+            <div>
+              <label class="block text-gray-700 text-sm font-medium mb-1">Confirm New Password</label>
+              <div class="flex items-center bg-gray-50 border border-gray-200 rounded-xl px-4 py-3">
+                <i class="fa-solid fa-lock text-gray-400 mr-3"></i>
+                <input
+                  type="password"
+                  id="confirmPassword"
+                  placeholder="Confirm new password"
+                  class="bg-transparent outline-none w-full text-gray-700 text-sm"
+                />
+              </div>
+            </div>
+
+            <button
+              onclick="updatePassword()"
+              class="w-full bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 rounded-xl transition text-sm">
+              <i class="fa-solid fa-key mr-2"></i>Change Password
+            </button>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+
+  <!-- FOOTER -->
+  <footer class="bg-gray-800 text-white mt-16">
+    <div class="max-w-7xl mx-auto px-4 py-8">
+      <div class="text-center text-gray-400 text-sm">
+        <p>© 2026 MyShop. All rights reserved. Made with ❤️ in Bangladesh</p>
+      </div>
+    </div>
+  </footer>
+
+
+  <script>
+
+    const API_URL = 'http://localhost:5000/api';
+    let currentUser = null;
+
+    // =============================================
+    // LOAD USER PROFILE
+    // =============================================
+    function loadProfile() {
+      const user = JSON.parse(localStorage.getItem('user'));
+
+      // If not logged in redirect to login
+      if (!user) {
+        window.location.href = 'login.html';
+        return;
+      }
+
+      currentUser = user;
+
+      // Show user info
+      document.getElementById('profileName').textContent = user.name;
+      document.getElementById('profileEmail').textContent = user.email;
+      document.getElementById('profileRole').textContent =
+        user.role === 'admin' ? '👑 Admin' : '👤 User';
+
+      // Pre fill name input
+      document.getElementById('newName').value = user.name;
+
+      // Show admin link if admin
+      if (user.role === 'admin') {
+        document.getElementById('adminLink').classList.remove('hidden');
+      }
+
+      // Update cart count
+      const cart = JSON.parse(localStorage.getItem('cart')) || [];
+      const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+      document.getElementById('cartCount').textContent = totalItems;
+    }
+
+
+    // =============================================
+    // UPDATE NAME
+    // =============================================
+    async function updateName() {
+      const newName = document.getElementById('newName').value.trim();
+      const nameError = document.getElementById('nameError');
+      const nameSuccess = document.getElementById('nameSuccess');
+
+      nameError.classList.add('hidden');
+      nameSuccess.classList.add('hidden');
+
+      if (!newName) {
+        nameError.textContent = '❌ Please enter a name!';
+        nameError.classList.remove('hidden');
+        return;
+      }
+
+      try {
+        const response = await fetch(`${API_URL}/auth/update/${currentUser.id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ name: newName })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          // Update localStorage
+          currentUser.name = data.user.name;
+          localStorage.setItem('user', JSON.stringify(currentUser));
+
+          // Update UI
+          document.getElementById('profileName').textContent = data.user.name;
+
+          nameSuccess.textContent = '✅ Name updated successfully!';
+          nameSuccess.classList.remove('hidden');
+        } else {
+          nameError.textContent = `❌ ${data.message}`;
+          nameError.classList.remove('hidden');
+        }
+
+      } catch (error) {
+        nameError.textContent = '❌ Cannot connect to server!';
+        nameError.classList.remove('hidden');
+      }
+    }
+
+
+    // =============================================
+    // UPDATE PASSWORD
+    // =============================================
+    async function updatePassword() {
+      const currentPassword = document.getElementById('currentPassword').value.trim();
+      const newPassword = document.getElementById('newPassword').value.trim();
+      const confirmPassword = document.getElementById('confirmPassword').value.trim();
+      const passError = document.getElementById('passError');
+      const passSuccess = document.getElementById('passSuccess');
+
+      passError.classList.add('hidden');
+      passSuccess.classList.add('hidden');
+
+      // Validate
+      if (!currentPassword || !newPassword || !confirmPassword) {
+        passError.textContent = '❌ Please fill in all password fields!';
+        passError.classList.remove('hidden');
+        return;
+      }
+
+      if (newPassword !== confirmPassword) {
+        passError.textContent = '❌ New passwords do not match!';
+        passError.classList.remove('hidden');
+        return;
+      }
+
+      if (newPassword.length < 6) {
+        passError.textContent = '❌ New password must be at least 6 characters!';
+        passError.classList.remove('hidden');
+        return;
+      }
+
+      try {
+        const response = await fetch(`${API_URL}/auth/update/${currentUser.id}`, {
+          method: 'PUT',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ currentPassword, newPassword })
+        });
+
+        const data = await response.json();
+
+        if (data.success) {
+          passSuccess.textContent = '✅ Password changed successfully!';
+          passSuccess.classList.remove('hidden');
+
+          // Clear password fields
+          document.getElementById('currentPassword').value = '';
+          document.getElementById('newPassword').value = '';
+          document.getElementById('confirmPassword').value = '';
+        } else {
+          passError.textContent = `❌ ${data.message}`;
+          passError.classList.remove('hidden');
+        }
+
+      } catch (error) {
+        passError.textContent = '❌ Cannot connect to server!';
+        passError.classList.remove('hidden');
+      }
+    }
+
+
+    // =============================================
+    // LOGOUT
+    // =============================================
+    function logout() {
+      localStorage.removeItem('user');
+      localStorage.removeItem('cart');
+      window.location.href = 'login.html';
+    }
+
+
+    // RUN ON PAGE LOAD
+    window.onload = function () {
+      loadProfile();
+    };
+
+  </script>
+
+</body>
+</html>
