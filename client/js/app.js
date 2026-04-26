@@ -1,6 +1,5 @@
-const API_URL = 'http://localhost:5000/api';
+const API_URL = '/api';
 
-// FETCH ALL PRODUCTS
 async function loadProducts(category = '') {
   const spinner = document.getElementById('loadingSpinner');
   const grid = document.getElementById('productsGrid');
@@ -34,7 +33,6 @@ async function loadProducts(category = '') {
   }
 }
 
-// DISPLAY PRODUCTS
 function displayProducts(products) {
   const grid = document.getElementById('productsGrid');
   grid.innerHTML = products.map(product => `
@@ -70,7 +68,6 @@ function displayProducts(products) {
   `).join('');
 }
 
-// SEARCH
 function setupSearch() {
   const searchInput = document.getElementById('searchInput');
   if (!searchInput) return;
@@ -84,13 +81,11 @@ function setupSearch() {
   });
 }
 
-// FILTER BY CATEGORY
 function filterCategory(category) {
   loadProducts(category);
   document.getElementById('products').scrollIntoView({ behavior: 'smooth' });
 }
 
-// ADD TO CART
 function addToCart(id, title, price, image) {
   const cart = JSON.parse(localStorage.getItem('cart')) || [];
   const existingItem = cart.find(item => item.id === id);
@@ -104,7 +99,6 @@ function addToCart(id, title, price, image) {
   showNotification(`✅ ${title} added to cart!`);
 }
 
-// UPDATE CART COUNT
 function updateCartCount() {
   const cart = JSON.parse(localStorage.getItem('cart')) || [];
   const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
@@ -112,13 +106,11 @@ function updateCartCount() {
   if (cartCountEl) cartCountEl.textContent = totalItems;
 }
 
-// TOGGLE DROPDOWN
 function toggleDropdown() {
   const menu = document.getElementById('dropdownMenu');
   menu.classList.toggle('hidden');
 }
 
-// CLOSE DROPDOWN WHEN CLICKING OUTSIDE
 document.addEventListener('click', function (e) {
   const dropdown = document.getElementById('profileDropdown');
   const menu = document.getElementById('dropdownMenu');
@@ -127,7 +119,6 @@ document.addEventListener('click', function (e) {
   }
 });
 
-// CHECK LOGIN STATUS
 function checkLoginStatus() {
   const user = JSON.parse(localStorage.getItem('user'));
   const loginBtn = document.getElementById('loginBtn');
@@ -146,14 +137,12 @@ function checkLoginStatus() {
   }
 }
 
-// LOGOUT
 function logoutUser() {
   localStorage.removeItem('user');
   localStorage.removeItem('cart');
-  window.location.href = 'login.html';
+  window.location.href = '/login.html';
 }
 
-// SHOW NOTIFICATION
 function showNotification(message, type = 'success') {
   const colors = { success: 'bg-green-500', error: 'bg-red-500', warning: 'bg-yellow-500' };
   const notification = document.createElement('div');
@@ -163,7 +152,6 @@ function showNotification(message, type = 'success') {
   setTimeout(() => { notification.remove(); }, 3000);
 }
 
-// RUN ON PAGE LOAD
 window.onload = function () {
   loadProducts();
   updateCartCount();
